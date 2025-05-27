@@ -251,6 +251,9 @@ void MeshGenerationFromPolyhedron<DataTypes>::doUpdate()
     Mesh_criteria criteria(
             #if CGAL_VERSION_NR >= CGAL_VERSION_NUMBER(3,8,0)
                 edge_size=sharpEdgeSize.getValue(),
+                cell_radius_edge_ratio=cellRatio.getValue(),
+            #else
+                cell_radius_edge=cellRatio.getValue(),
             #endif
 
                 facet_angle=facetAngle.getValue(), facet_size=facetSize.getValue(), facet_distance=facetApproximation.getValue(),
