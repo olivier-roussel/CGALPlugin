@@ -257,7 +257,7 @@ void MeshGenerationFromPolyhedron<DataTypes>::doUpdate()
             #endif
 
                 facet_angle=facetAngle.getValue(), facet_size=facetSize.getValue(), facet_distance=facetApproximation.getValue(),
-                cell_radius_edge=cellRatio.getValue(), cell_size=cellSize.getValue());
+                cell_size=cellSize.getValue());
     C3t3 c3t3 = CGAL::make_mesh_3<C3t3>(domain, criteria, no_perturb(), no_exude());
 
 #else
