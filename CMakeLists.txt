@@ -67,8 +67,11 @@ if(image_FOUND)
 endif()
 
 set_property(GLOBAL PROPERTY JOB_POOLS one_jobs=1 two_jobs=2 three_jobs=3 four_jobs=4)
-if(UNIX AND NOT APPLE)
-    set_property(TARGET ${PROJECT_NAME} PROPERTY JOB_POOL_COMPILE one_jobs)
+if(CMAKE_GENERATOR STREQUAL "Ninja")
+    option(SOFA_CGALPLUGIN_LIMIT_NINJA_JOB_POOL "Limit the number of job pool for ninja to avoid OOM errors" OFF)
+    if(UNIX AND NOT APPLE AND SOFA_CGALPLUGIN_LIMIT_NINJA_JOB_POOL)
+        set_property(TARGET ${PROJECT_NAME} PROPERTY JOB_POOL_COMPILE one_jobs)
+    endif()
 endif()
 
 
