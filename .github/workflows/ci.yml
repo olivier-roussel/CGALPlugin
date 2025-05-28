@@ -60,6 +60,7 @@ jobs:
             unzip -qq "${{ runner.temp }}/cgal_dep.zip" -d "${{ runner.temp }}/cgal_dir"
             echo "CGAL_ROOT=${{ runner.temp }}/cgal_dir" | tee -a $GITHUB_ENV
             echo "GMP_ROOT=${{ runner.temp }}/cgal_dir/auxiliary/gmp" | tee -a $GITHUB_ENV
+            echo "MPFR_DIR=${{ runner.temp }}/cgal_dir/auxiliary/gmp" | tee -a $GITHUB_ENV
             echo "MPFR_LIBRARIES=${{ runner.temp }}/cgal_dir/auxiliary/gmp/lib/libmpfr-4.lib" | tee -a $GITHUB_ENV
           fi
       
