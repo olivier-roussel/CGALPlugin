@@ -206,8 +206,11 @@ void MeshGenerationFromImage<DataTypes, _ImageTypes>::doUpdate()
         image3.read(this->d_filename.getFullPath().c_str());
     }
 
+#if CGAL_VERSION_NR >= CGAL_VERSION_NUMBER(4,13,0)
+    Mesh_domain domain = Mesh_domain::create_labeled_image_mesh_domain(image3);
+#else
     Mesh_domain domain(image3);
-
+#endif
     int volume_dimension = 3;
     Sizing_field size(d_cellSize.getValue());
 
@@ -228,9 +231,16 @@ void MeshGenerationFromImage<DataTypes, _ImageTypes>::doUpdate()
 
 #if CGAL_VERSION_NR >= CGAL_VERSION_NUMBER(3,6,0)
     msg_info(this) << "Create Mesh";
-    Mesh_criteria criteria(edge_size=d_edgeSize.getValue(),
+    Mesh_criteria criteria(
+        #if CGAL_VERSION_NR >= CGAL_VERSION_NUMBER(3,8,0)
+            edge_size=d_edgeSize.getValue(),
+            cell_radius_edge_ratio=d_cellRatio.getValue(),
+        #else
+            cell_radius_edge=d_cellRatio.getValue(),
+        #endif
+
         facet_angle=d_facetAngle.getValue(), facet_size=d_facetSize.getValue(), facet_distance=d_facetApproximation.getValue(),
-        cell_radius_edge=d_cellRatio.getValue(), cell_size=size);
+        cell_size=size);
 
     size_t nfts = fts.size();
     Polylines polylines (nfts);

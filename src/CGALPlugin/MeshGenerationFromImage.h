@@ -33,7 +33,13 @@
 #include <CGAL/Mesh_triangulation_3.h>
 #include <CGAL/Mesh_complex_3_in_triangulation_3.h>
 #include <CGAL/Mesh_criteria_3.h>
+
+#if CGAL_VERSION_NR >= CGAL_VERSION_NUMBER(4,13,0)
+#include <CGAL/Labeled_mesh_domain_3.h>
+#else
 #include <CGAL/Labeled_image_mesh_domain_3.h>
+#endif
+
 #include <CGAL/Mesh_domain_with_polyline_features_3.h>
 #include <CGAL/make_mesh_3.h>
 #include <CGAL/refine_mesh_3.h>
@@ -68,7 +74,11 @@ public:
 
 	// Domain
     // (we use exact intersection computation with Robust_intersection_traits_3)
+#if CGAL_VERSION_NR >= CGAL_VERSION_NUMBER(4,13,0)
+    typedef CGAL::Mesh_domain_with_polyline_features_3<CGAL::Labeled_mesh_domain_3<K> >    Mesh_domain;
+#else
     typedef CGAL::Mesh_domain_with_polyline_features_3<CGAL::Labeled_image_mesh_domain_3<CGAL::Image_3,K> >    Mesh_domain;
+#endif
     typedef K::Point_3 Point3;
 
     typedef std::vector<Point3>	 Polyline;
